@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import { colors } from '../shared/colors';
+
 export default createGlobalStyle`
   *{
     margin: 0;
@@ -10,6 +12,7 @@ export default createGlobalStyle`
 
   body{
     -webkit-font-smoothing: antialiased;
+    background-color: ${colors.background};
   }
 
   button {
