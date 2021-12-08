@@ -1,33 +1,38 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { NavBar, TodoCard, Input } from '../../components';
-import { TasksProps } from '../../components/TodoCard/types';
+import { IState } from '../../store';
+import {
+  addTaskToList,
+  removeTaskFromList
+} from '../../store/modules/tasks/actions';
+import { TasksProps } from '../../store/modules/tasks/types';
 import { Container, TodoContainer } from './styles';
 
 const Dashboard: React.FC = () => {
   const [inputValue, setInputValue] = React.useState('');
-  const [tasks, setTasks] = React.useState<TasksProps[]>([]);
+  const dispatch = useDispatch();
 
-  function handleAddTasks(event: any) {
-    event.preventDefault();
+  const tasks = useSelector<IState, TasksProps[]>(state => state.tasks.items);
 
-    setTasks(prevTasks => {
-      if (!prevTasks) return prevTasks;
-      const date = new Date();
+  const handleAddTasks = React.useCallback(
+    (event: any) => {
+      event.preventDefault();
+      if (inputValue.trim() === '') return null;
 
-      return [...prevTasks, { id: Number(date.getTime()), title: inputValue }];
-    });
-    setInputValue('');
-  }
+      dispatch(addTaskToList(inputValue));
+      setInputValue('');
+    },
+    [dispatch, inputValue]
+  );
 
-  const removeTask = React.useCallback((id: number) => {
-    setTasks(prevTasks => {
-      const newTasks = prevTasks;
-      const filterTask = newTasks.filter(task => task.id !== id);
-
-      return filterTask;
-    });
-  }, []);
+  const removeTask = React.useCallback(
+    (id: number) => {
+      dispatch(removeTaskFromList(id));
+    },
+    [dispatch]
+  );
 
   const renderTasks = React.useCallback(() => {
     if (!tasks.length) return null;
