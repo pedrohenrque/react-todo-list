@@ -2,26 +2,25 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NavBar, TodoCard, Input } from '../../components';
-import { IState } from '../../store';
 import {
   addTaskToList,
-  removeTaskFromList
-} from '../../store/modules/tasks/actions';
-import { TasksProps } from '../../store/modules/tasks/types';
+  removeTaskFromList,
+  tasksSelector
+} from '../../store/modules/tasks/store';
 import { Container, TodoContainer } from './styles';
 
 const Dashboard: React.FC = () => {
   const [inputValue, setInputValue] = React.useState('');
   const dispatch = useDispatch();
 
-  const tasks = useSelector<IState, TasksProps[]>(state => state.tasks.items);
+  const tasks = useSelector(tasksSelector);
 
   const handleAddTasks = React.useCallback(
     (event: any) => {
       event.preventDefault();
       if (inputValue.trim() === '') return null;
 
-      dispatch(addTaskToList(inputValue));
+      dispatch(addTaskToList({ title: inputValue }));
       setInputValue('');
     },
     [dispatch, inputValue]
@@ -29,7 +28,7 @@ const Dashboard: React.FC = () => {
 
   const removeTask = React.useCallback(
     (id: number) => {
-      dispatch(removeTaskFromList(id));
+      dispatch(removeTaskFromList({ id: id }));
     },
     [dispatch]
   );
@@ -37,7 +36,7 @@ const Dashboard: React.FC = () => {
   const renderTasks = React.useCallback(() => {
     if (!tasks.length) return null;
 
-    const todos = tasks.map((task, index) => (
+    const allTasks = tasks.map((task, index) => (
       <TodoCard
         key={task.id}
         task={task}
@@ -45,7 +44,7 @@ const Dashboard: React.FC = () => {
       />
     ));
 
-    return todos;
+    return allTasks;
   }, [removeTask, tasks]);
 
   return (

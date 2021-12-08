@@ -1,12 +1,5 @@
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 
-import rootReducer from './modules/rootReducer';
-import { TasksListProps } from './modules/tasks/types';
+import { tasksSlice } from './modules/tasks/store';
 
-export interface IState {
-  tasks: TasksListProps;
-}
-
-const store = createStore(rootReducer);
-
-export default store;
+export const store = configureStore({ reducer: tasksSlice.reducer });
