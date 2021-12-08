@@ -6,3 +6,11 @@ export interface TasksProps {
 export interface TasksListProps {
   items: TasksProps[];
 }
+
+export interface IPayloadAddTaskToList {
+  title: string;
+}
+
+export interface IPayloadRemoveTaskFromList {
+  id: number;
+}
