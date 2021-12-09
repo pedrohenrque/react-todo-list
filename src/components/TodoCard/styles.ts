@@ -14,12 +14,18 @@ export const Container = styled.div<ActiveContainerProps>`
   border: 2px ${colors.backgroundTodoCard} solid;
   border-color: ${props =>
     props.isActive ? colors.secondary : colors.backgroundTodoCard};
-  /* background-color: ${colors.backgroundTodoCard}; */
   backdrop-filter: blur(2px);
 
-  background: #181820;
+  background: ${colors.backgroundTodoCard};
   box-shadow: 20px 20px 60px #14141b, -20px -20px 60px #1c1c25;
   transition: 400ms;
+
+  ${props =>
+    props.checked &&
+    css`
+      box-shadow: inset 20px 20px 60px #14141b, inset -20px -20px 60px #1c1c25,
+        20px 20px 60px #14141b, -20px -20px 60px #1c1c25;
+    `}
 
   &:hover {
     background-color: ${lighten(0.02, colors.backgroundTodoCard)};

@@ -26,7 +26,7 @@ const TodoCard: React.FC<TodoCardProps> = ({
 
   if (!task) return null;
 
-  const { title, done } = task;
+  const { title, date } = task;
 
   function handleEditTask() {
     if (!editTask) return null;
@@ -71,7 +71,7 @@ const TodoCard: React.FC<TodoCardProps> = ({
   }
 
   return (
-    <Container isActive={isActiveCard}>
+    <Container isActive={isActiveCard} checked={checked}>
       <Content>
         <CheckboxButton
           type="button"
@@ -84,7 +84,7 @@ const TodoCard: React.FC<TodoCardProps> = ({
       </Content>
 
       <DetailContainer>
-        <DetailDayText>Today</DetailDayText>
+        <DetailDayText>{date}</DetailDayText>
         {renderActionButtons()}
       </DetailContainer>
     </Container>

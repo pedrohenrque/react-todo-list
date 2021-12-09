@@ -1,3 +1,5 @@
+import { TasksProps } from '../../store/modules/tasks/types';
+
 export interface TodoCardProps {
   editTask: () => void;
   deleteTask: () => void;
@@ -6,16 +8,11 @@ export interface TodoCardProps {
   task: TasksProps;
 }
 
-export interface TasksProps {
-  id: number;
-  title: string;
-  done: boolean;
-}
-
 export interface CheckedTodoProps {
   checked: boolean;
 }
 
 export interface ActiveContainerProps {
   isActive: boolean;
+  checked: boolean;
 }
