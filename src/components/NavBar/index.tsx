@@ -1,7 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { tasksCounterSelector } from '../../store/modules/tasks/store';
+import {
+  counterCompleteTasks,
+  counterIncompleteTasks
+} from '../../store/modules/tasks/store';
 import {
   Container,
   Content,
@@ -12,7 +15,8 @@ import {
 } from './styles';
 
 const NavBar: React.FC = () => {
-  const tasksCounter = useSelector(tasksCounterSelector);
+  const tasksIncomplete = useSelector(counterIncompleteTasks);
+  const tasksComolete = useSelector(counterCompleteTasks);
 
   return (
     <Container>
@@ -25,7 +29,10 @@ const NavBar: React.FC = () => {
 
         <NumberOfTasksContainer>
           <Title>
-            tasks incompletas: <span>{tasksCounter}</span>
+            tasks incompletas: <span>{tasksIncomplete}</span>
+          </Title>
+          <Title>
+            tasks completas: <span>{tasksComolete}</span>
           </Title>
         </NumberOfTasksContainer>
       </Content>

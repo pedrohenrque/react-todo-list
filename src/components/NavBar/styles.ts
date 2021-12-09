@@ -37,7 +37,9 @@ export const LogoText = styled.h1`
 
 export const NumberOfTasksContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 `;
 
 export const Title = styled.h3`
