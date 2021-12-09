@@ -20,3 +20,7 @@ export interface IPayloadEditTaskFromList {
   index: number;
   title: string;
 }
+
+export interface IPayloadMarkTaskCompleted {
+  index: number;
+}
