@@ -1,7 +1,8 @@
 export interface TodoCardProps {
-  editTask?: () => void;
-  deleteTask?: () => void;
-  saveEditTask?: () => void;
+  editTask: () => void;
+  deleteTask: () => void;
+  saveEditTask: () => void;
+  markTaskCompleted: () => void;
   task: TasksProps;
 }
 

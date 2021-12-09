@@ -18,7 +18,8 @@ const TodoCard: React.FC<TodoCardProps> = ({
   task,
   editTask,
   deleteTask,
-  saveEditTask
+  saveEditTask,
+  markTaskCompleted
 }) => {
   const [checked, setChecked] = React.useState(false);
   const [isActiveCard, setIsActiveCard] = React.useState(false);
@@ -39,6 +40,13 @@ const TodoCard: React.FC<TodoCardProps> = ({
 
     saveEditTask();
     setIsActiveCard(false);
+  }
+
+  function handleMarkTaskCompleted() {
+    if (!markTaskCompleted) return null;
+
+    markTaskCompleted();
+    setChecked(checked => !checked);
   }
 
   function renderActionButtons() {
@@ -67,7 +75,7 @@ const TodoCard: React.FC<TodoCardProps> = ({
       <Content>
         <CheckboxButton
           type="button"
-          onClick={() => setChecked(prevCheck => !prevCheck)}
+          onClick={handleMarkTaskCompleted}
           checked={checked}
         >
           <FaCheck color={colors.backgroundTodoCard} size={14} />

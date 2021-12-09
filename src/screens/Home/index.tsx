@@ -5,6 +5,7 @@ import { NavBar, TodoCard, Input } from '../../components';
 import {
   addTaskToList,
   editTaskFromList,
+  markTaskCompleted,
   removeTaskFromList,
   tasksSelector
 } from '../../store/modules/tasks/store';
@@ -51,6 +52,13 @@ const Dashboard: React.FC = () => {
     [dispatch]
   );
 
+  const markTaskIsDone = React.useCallback(
+    (index: number) => {
+      dispatch(markTaskCompleted({ index: index }));
+    },
+    [dispatch]
+  );
+
   function renderTasks() {
     if (!tasks.length) return null;
 
@@ -61,6 +69,7 @@ const Dashboard: React.FC = () => {
         deleteTask={() => removeTask(task.id)}
         editTask={() => editTask(task.title)}
         saveEditTask={() => saveEditTask(index, inputValue)}
+        markTaskCompleted={() => markTaskIsDone(index)}
       />
     ));
 

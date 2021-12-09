@@ -14,11 +14,11 @@ export const Container = styled.div<ActiveContainerProps>`
   border: 2px ${colors.backgroundTodoCard} solid;
   border-color: ${props =>
     props.isActive ? colors.secondary : colors.backgroundTodoCard};
-  background-color: ${colors.backgroundTodoCard};
+  /* background-color: ${colors.backgroundTodoCard}; */
   backdrop-filter: blur(2px);
 
-  -webkit-box-shadow: 6px 5px 42px -8px rgba(0, 0, 0, 0.28);
-  box-shadow: 6px 5px 42px -8px rgba(0, 0, 0, 0.28);
+  background: #181820;
+  box-shadow: 20px 20px 60px #14141b, -20px -20px 60px #1c1c25;
   transition: 400ms;
 
   &:hover {
