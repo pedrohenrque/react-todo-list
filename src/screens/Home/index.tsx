@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavBar, TodoCard, Input } from '../../components';
 import {
   addTaskToList,
+  editTaskFromList,
   removeTaskFromList,
   tasksSelector
 } from '../../store/modules/tasks/store';
@@ -11,6 +12,7 @@ import { Container, TodoContainer } from './styles';
 
 const Dashboard: React.FC = () => {
   const [inputValue, setInputValue] = React.useState('');
+  const [addDisabled, setAddDisabled] = React.useState(false);
   const dispatch = useDispatch();
 
   const tasks = useSelector(tasksSelector);
@@ -33,7 +35,23 @@ const Dashboard: React.FC = () => {
     [dispatch]
   );
 
-  const renderTasks = React.useCallback(() => {
+  function editTask(title: string) {
+    setInputValue(title);
+    setAddDisabled(true);
+  }
+
+  const saveEditTask = React.useCallback(
+    (index: number, title: string) => {
+      if (title.trim() === '') return null;
+
+      dispatch(editTaskFromList({ index: index, title: title }));
+      setInputValue('');
+      setAddDisabled(false);
+    },
+    [dispatch]
+  );
+
+  function renderTasks() {
     if (!tasks.length) return null;
 
     const allTasks = tasks.map((task, index) => (
@@ -41,11 +59,13 @@ const Dashboard: React.FC = () => {
         key={task.id}
         task={task}
         deleteTask={() => removeTask(task.id)}
+        editTask={() => editTask(task.title)}
+        saveEditTask={() => saveEditTask(index, inputValue)}
       />
     ));
 
     return allTasks;
-  }, [removeTask, tasks]);
+  }
 
   return (
     <Container>
@@ -55,6 +75,7 @@ const Dashboard: React.FC = () => {
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           onSubmit={handleAddTasks}
+          disabled={addDisabled}
         />
         {renderTasks()}
       </TodoContainer>
