@@ -14,14 +14,56 @@ import {
 } from './styles';
 import { TodoCardProps } from './types';
 
-const TodoCard: React.FC<TodoCardProps> = ({ task, deleteTask, editTask }) => {
+const TodoCard: React.FC<TodoCardProps> = ({
+  task,
+  editTask,
+  deleteTask,
+  saveEditTask
+}) => {
   const [checked, setChecked] = React.useState(false);
+  const [isActiveCard, setIsActiveCard] = React.useState(false);
+
   if (!task) return null;
 
-  const { title } = task;
+  const { title, done } = task;
+
+  function handleEditTask() {
+    if (!editTask) return null;
+
+    editTask();
+    setIsActiveCard(true);
+  }
+
+  function handleSaveEditTask() {
+    if (!saveEditTask) return null;
+
+    saveEditTask();
+    setIsActiveCard(false);
+  }
+
+  function renderActionButtons() {
+    return (
+      <ActionContainer>
+        <Button
+          title="Editar"
+          color={colors.editButtonBackground}
+          onClick={handleEditTask}
+        />
+        {isActiveCard ? (
+          <Button
+            title="Salvar"
+            color={colors.tertiary}
+            onClick={handleSaveEditTask}
+          />
+        ) : (
+          <Button title="Excluir" color={colors.alert} onClick={deleteTask} />
+        )}
+      </ActionContainer>
+    );
+  }
 
   return (
-    <Container>
+    <Container isActive={isActiveCard}>
       <Content>
         <CheckboxButton
           type="button"
@@ -30,20 +72,12 @@ const TodoCard: React.FC<TodoCardProps> = ({ task, deleteTask, editTask }) => {
         >
           <FaCheck color={colors.backgroundTodoCard} size={14} />
         </CheckboxButton>
-
         <Title checked={checked}>{title}</Title>
       </Content>
 
       <DetailContainer>
         <DetailDayText>Today</DetailDayText>
-        <ActionContainer>
-          <Button
-            title="Editar"
-            color={colors.editButtonBackground}
-            onClick={editTask}
-          />
-          <Button title="Excluir" color={colors.alert} onClick={deleteTask} />
-        </ActionContainer>
+        {renderActionButtons()}
       </DetailContainer>
     </Container>
   );

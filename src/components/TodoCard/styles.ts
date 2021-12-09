@@ -2,9 +2,9 @@ import { lighten } from 'polished';
 import styled, { css } from 'styled-components';
 
 import { colors } from '../../shared/colors';
-import { CheckedTodoProps } from './types';
+import { ActiveContainerProps, CheckedTodoProps } from './types';
 
-export const Container = styled.div`
+export const Container = styled.div<ActiveContainerProps>`
   display: flex;
   flex-direction: column;
   width: 500px;
@@ -12,6 +12,8 @@ export const Container = styled.div`
 
   border-radius: 24px;
   border: 2px ${colors.backgroundTodoCard} solid;
+  border-color: ${props =>
+    props.isActive ? colors.secondary : colors.backgroundTodoCard};
   background-color: ${colors.backgroundTodoCard};
   backdrop-filter: blur(2px);
 
