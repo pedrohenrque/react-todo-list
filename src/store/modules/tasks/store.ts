@@ -19,9 +19,14 @@ export const tasksSlice = createSlice({
   reducers: {
     addTaskToList: (state, action: PayloadAction<IPayloadAddTaskToList>) => {
       const { title } = action.payload;
-      const date = new Date().getTime();
+      const date = new Date();
 
-      state.items.push({ id: Number(date), title: title, done: false });
+      state.items.push({
+        id: Number(date.getTime()),
+        title: title,
+        done: false,
+        date: date.toLocaleDateString()
+      });
     },
     removeTaskFromList: (
       state,

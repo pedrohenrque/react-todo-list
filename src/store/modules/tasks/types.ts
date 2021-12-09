@@ -2,6 +2,7 @@ export interface TasksProps {
   id: number;
   title: string;
   done: boolean;
+  date: any;
 }
 
 export interface ITasksState {
