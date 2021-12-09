@@ -12,7 +12,7 @@ import { Container, TodoContainer } from './styles';
 
 const Dashboard: React.FC = () => {
   const [inputValue, setInputValue] = React.useState('');
-  const [addDisabled, setAddDisabled] = React.useState(false);
+  const [addTaskDisabled, setAddTaskDisabled] = React.useState(false);
   const dispatch = useDispatch();
 
   const tasks = useSelector(tasksSelector);
@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
 
   function editTask(title: string) {
     setInputValue(title);
-    setAddDisabled(true);
+    setAddTaskDisabled(true);
   }
 
   const saveEditTask = React.useCallback(
@@ -46,7 +46,7 @@ const Dashboard: React.FC = () => {
 
       dispatch(editTaskFromList({ index: index, title: title }));
       setInputValue('');
-      setAddDisabled(false);
+      setAddTaskDisabled(false);
     },
     [dispatch]
   );
@@ -75,7 +75,7 @@ const Dashboard: React.FC = () => {
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           onSubmit={handleAddTasks}
-          disabled={addDisabled}
+          disabled={addTaskDisabled}
         />
         {renderTasks()}
       </TodoContainer>
