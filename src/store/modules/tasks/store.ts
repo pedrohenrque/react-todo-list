@@ -3,12 +3,12 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../types';
 import {
   IPayloadAddTaskToList,
+  IPayloadEditTaskFromList,
   IPayloadRemoveTaskFromList,
-  TasksListProps,
-  TasksProps
+  ITasksState
 } from './types';
 
-const INITIAL_STATE: TasksListProps = {
+const INITIAL_STATE: ITasksState = {
   items: []
 };
 
@@ -18,9 +18,9 @@ export const tasksSlice = createSlice({
   reducers: {
     addTaskToList: (state, action: PayloadAction<IPayloadAddTaskToList>) => {
       const { title } = action.payload;
-      const date = new Date();
+      const date = new Date().getTime();
 
-      state.items.push({ id: Number(date), title: title });
+      state.items.push({ id: Number(date), title: title, done: false });
     },
     removeTaskFromList: (
       state,
@@ -29,13 +29,22 @@ export const tasksSlice = createSlice({
       const { id } = action.payload;
 
       state.items = state.items.filter(task => task.id !== id);
+    },
+    editTaskFromList: (
+      state,
+      action: PayloadAction<IPayloadEditTaskFromList>
+    ) => {
+      const { index, title } = action.payload;
+
+      state.items[index].title = title;
     }
   }
 });
 
-export const { addTaskToList, removeTaskFromList } = tasksSlice.actions;
+export const { addTaskToList, removeTaskFromList, editTaskFromList } =
+  tasksSlice.actions;
 
 export const tasksSelector = createSelector(
-  (state: RootState) => state,
+  (state: RootState) => state.tasks,
   tasks => tasks.items
 );
